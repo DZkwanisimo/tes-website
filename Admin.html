@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Dashboard Admin · Tes Pancasila</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#2b2250;--soft:#6b6390;--card:#fff;--line:rgba(43,34,80,.12);--bg:#f4efff;--acc:#8a5cf6}
+@media (prefers-color-scheme:dark){:root{--ink:#f5f0ff;--soft:#b9b1dc;--card:#241a4a;--line:rgba(255,255,255,.14);--bg:#150f30}}
+*{box-sizing:border-box;margin:0}
+body{font-family:'Nunito',system-ui,sans-serif;background:var(--bg);color:var(--ink);padding:18px 14px 50px;line-height:1.45}
+h1,h2,.btn,.big{font-family:'Baloo 2','Nunito',sans-serif}
+.wrap{max-width:1040px;margin:auto}
+.top{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-bottom:16px}
+h1{font-size:1.7rem;font-weight:800}
+.card{background:var(--card);border:2px solid var(--line);border-radius:22px;padding:18px;margin-bottom:16px}
+.btn{border:0;cursor:pointer;font-size:1rem;font-weight:800;color:#fff;padding:9px 18px;border-radius:99px;background:linear-gradient(90deg,#ff5fa2,#8a5cf6)}
+.btn.alt{background:transparent;color:var(--ink);border:2px solid var(--line)}
+.btn.del{background:#e11d48}
+.btn:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:16px}
+.stat{background:var(--card);border:2px solid var(--line);border-radius:20px;padding:14px 16px}
+.stat small{color:var(--soft);font-weight:700}
+.big{font-size:1.9rem;font-weight:800;line-height:1.1}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+h2{font-size:1.2rem;margin-bottom:12px}
+.b{display:grid;grid-template-columns:150px 1fr 74px;gap:10px;align-items:center;margin-bottom:10px;font-weight:700;font-size:.92rem}
+.t{height:14px;border-radius:99px;background:var(--line);overflow:hidden}.t i{display:block;height:100%;border-radius:99px}
+.b em{font-style:normal;text-align:right}
+.tools{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:12px}
+input,select{font:inherit;font-weight:700;color:var(--ink);background:var(--card);border:2px solid var(--line);border-radius:14px;padding:9px 12px}
+input[type=search]{flex:1;min-width:200px}
+.scroll{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:.92rem;min-width:720px}
+th,td{padding:9px 8px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--soft);font-weight:800}
+tr.r{cursor:pointer}tr.r:hover{background:var(--line)}
+td.n{text-align:center;font-weight:800}
+.pill{display:inline-block;padding:2px 10px;border-radius:99px;color:#fff;font-weight:800;font-size:.82rem;white-space:nowrap}
+.seg{display:flex;height:14px;border-radius:99px;overflow:hidden;margin:6px 0 12px}
+.d td{background:var(--line)}
+.d ol{padding-left:20px;font-size:.9rem}.d li{margin-bottom:4px}
+.login{max-width:380px;margin:12vh auto;text-align:center}
+.login input{width:100%;margin:12px 0}
+.err{color:#e11d48;font-weight:800;min-height:1.3em}
+.empty{text-align:center;color:var(--soft);font-weight:700;padding:24px}
+</style>
+</head>
+<body><div class="wrap" id="root"></div>
+<script>
+const S=[['Sila 1','Ketuhanan','#f5a300'],['Sila 2','Kemanusiaan','#ff4d8d'],['Sila 3','Persatuan','#e63946'],['Sila 4','Kerakyatan','#6d5df6'],['Sila 5','Keadilan','#12a594']];
+const H=['Si Penjaga Iman','Si Hati Hangat','Si Perekat Bangsa','Si Suara Musyawarah','Si Penegak Adil'];
+const $=s=>document.querySelector(s),root=$('#root');
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmt=t=>new Date(t).toLocaleString('id-ID',{dateStyle:'medium',timeStyle:'short'});
+let pw=sessionStorage.getItem('pw')||'',D=[];
+
+function login(msg=''){
+ root.innerHTML=`<form class="card login" id="lf"><h1>Dashboard Admin</h1><p style="color:var(--soft);font-weight:700">Masukkan password admin untuk melihat hasil responden.</p>
+ <input type="password" id="pw" placeholder="Password admin" autocomplete="current-password" required><p class="err">${esc(msg)}</p><button class="btn" type="submit">Masuk</button></form>`;
+ $('#lf').onsubmit=e=>{e.preventDefault();pw=$('#pw').value;load()};
+}
+async function load(){
+ try{
+  const r=await fetch('/api/results',{headers:{'x-admin-password':pw},cache:'no-store'});
+  if(r.status===401){sessionStorage.removeItem('pw');return login('Password salah.')}
+  if(!r.ok){const j=await r.json().catch(()=>({}));return login((j.error||'Gagal memuat')+' ('+r.status+')')}
+  sessionStorage.setItem('pw',pw);D=(await r.json()).items;dash();
+ }catch(e){login('Tidak bisa terhubung ke server.')}
+}
+const mean=a=>a.length?a.reduce((x,y)=>x+y,0)/a.length:0;
+
+function dash(){
+ const n=D.length,avg=[0,1,2,3,4].map(i=>mean(D.map(d=>d.percents[i])));
+ const cnt=[0,0,0,0,0];D.forEach(d=>cnt[d.top]++);
+ const topT=cnt.indexOf(Math.max(...cnt)),topA=avg.indexOf(Math.max(...avg));
+ const today=D.filter(d=>new Date(d.t).toDateString()===new Date().toDateString()).length;
+ const bars=(vals,lab)=>S.map((s,i)=>`<div class="b"><span>${s[0]} ${s[1]}</span><div class="t"><i style="width:${vals[i].w}%;background:${s[2]}"></i></div><em>${vals[i].v}</em></div>`).join('');
+ root.innerHTML=`<div class="top"><h1>Hasil Tes Pancasila</h1><div class="tools" style="margin:0">
+  <button class="btn alt" id="rf">Segarkan</button><button class="btn" id="csv">Ekspor CSV</button><button class="btn del" id="clr">Hapus semua</button><button class="btn alt" id="out">Keluar</button></div></div>
+ <div class="stats">
+  <div class="stat"><small>Total responden</small><div class="big">${n}</div></div>
+  <div class="stat"><small>Hari ini</small><div class="big">${today}</div></div>
+  <div class="stat"><small>Tipe terbanyak</small><div class="big" style="color:${S[topT][2]}">${n?H[topT]:'-'}</div></div>
+  <div class="stat"><small>Sila rata-rata tertinggi</small><div class="big" style="color:${S[topA][2]}">${n?S[topA][0]+' · '+avg[topA].toFixed(1)+'%':'-'}</div></div></div>
+ <div class="grid2">
+  <div class="card"><h2>Rata-rata persentase tiap sila</h2>${bars(avg.map(v=>({w:v,v:v.toFixed(1)+'%'})))}</div>
+  <div class="card"><h2>Distribusi tipe dominan</h2>${bars(cnt.map(c=>({w:n?c/n*100:0,v:c+' ('+(n?Math.round(c/n*100):0)+'%)'})))}</div></div>
+ <div class="card"><h2>Daftar responden</h2><div class="tools">
+  <input type="search" id="q" placeholder="Cari nama atau kelas"><select id="ft"><option value="">Semua tipe</option>${H.map((h,i)=>`<option value="${i}">${h}</option>`).join('')}</select></div>
+  <div class="scroll"><table><thead><tr><th>#</th><th>Nama</th><th>Kelas / sekolah</th><th>Tipe dominan</th>${S.map((s,i)=>`<th>S${i+1}</th>`).join('')}<th>Waktu</th></tr></thead><tbody id="tb"></tbody></table></div>
+  <p class="empty" id="em" hidden>Belum ada data yang cocok.</p></div>`;
+ $('#rf').onclick=load;$('#out').onclick=()=>{sessionStorage.removeItem('pw');pw='';login()};
+ $('#csv').onclick=exportCsv;$('#clr').onclick=wipe;$('#q').oninput=rows;$('#ft').onchange=rows;
+ $('#tb').onclick=e=>{const tr=e.target.closest('tr.r');if(tr){const d=tr.nextElementSibling;d.hidden=!d.hidden}};
+ rows();
+}
+function rows(){
+ const q=$('#q').value.toLowerCase(),f=$('#ft').value;
+ const L=D.filter(d=>(f===''||d.top==f)&&(d.nama+' '+d.kelas).toLowerCase().includes(q));
+ $('#em').hidden=L.length>0;
+ $('#tb').innerHTML=L.map((d,k)=>`<tr class="r" title="Klik untuk detail"><td class="n">${L.length-k}</td><td><b>${esc(d.nama)}</b></td><td>${esc(d.kelas||'-')}</td>
+  <td><span class="pill" style="background:${S[d.top][2]}">${H[d.top]}</span></td>${d.percents.map((p,i)=>`<td style="${i===d.top?'font-weight:800;color:'+S[i][2]:''}">${p}%</td>`).join('')}<td>${fmt(d.t)}</td></tr>
+  <tr class="d" hidden><td colspan="10"><div class="seg">${d.percents.map((p,i)=>`<span style="width:${p}%;background:${S[i][2]}" title="${S[i][1]} ${p}%"></span>`).join('')}</div>
+  <p style="font-weight:800;margin-bottom:6px">Poin mentah: ${d.scores.map((s,i)=>`${S[i][0]} = ${s}`).join(' · ')}</p>
+  <ol>${(d.answers||[]).map(a=>`<li>${esc(a.q)}<br><b>${esc(a.a)}</b> <span style="color:${S[a.s]?S[a.s][2]:'inherit'}">(${S[a.s]?S[a.s][0]:'-'})</span></li>`).join('')}</ol></td></tr>`).join('');
+}
+function exportCsv(){
+ const c=v=>{v=String(v);if(/^[=+\-@]/.test(v))v="'"+v;return '"'+v.replace(/"/g,'""')+'"'};
+ const head=['Waktu','Nama','Kelas/Sekolah','Tipe dominan',...S.map(s=>s[0]+' (%)'),...S.map(s=>s[0]+' (poin)')];
+ const out=[head,...D.map(d=>[d.t,d.nama,d.kelas,H[d.top],...d.percents,...d.scores])].map(r=>r.map(c).join(',')).join('\r\n');
+ const a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['\ufeff'+out],{type:'text/csv;charset=utf-8'}));
+ a.download='hasil-tes-pancasila.csv';a.click();
+}
+async function wipe(){
+ if(!confirm('Hapus SEMUA data responden? Tindakan ini tidak bisa dibatalkan.'))return;
+ const r=await fetch('/api/results',{method:'DELETE',headers:{'x-admin-password':pw}});
+ r.ok?load():alert('Gagal menghapus data.');
+}
+pw?load():login();
+</script>
+</body>
+</html>
