@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kamu Sila yang Mana? Tes Kepribadian Pancasila</title>
+<meta name="description" content="Tes kepribadian Pancasila untuk siswa SMA/SMK. 10 soal, hasil persentase kelima sila.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#2b2250;--soft:#6b6390;--card:rgba(255,255,255,.82);--line:rgba(43,34,80,.1);--bg1:#ffe3f1;--bg2:#e0ecff;--bg3:#fff3c9;--c:#8a5cf6;--c2:#ff7eb6}
+@media (prefers-color-scheme:dark){:root{--ink:#f5f0ff;--soft:#b9b1dc;--card:rgba(40,30,80,.78);--line:rgba(255,255,255,.14);--bg1:#2a1648;--bg2:#12204a;--bg3:#35214d}}
+*{box-sizing:border-box;margin:0}
+html,body{min-height:100%}
+body{font-family:'Nunito',system-ui,sans-serif;color:var(--ink);background:linear-gradient(135deg,var(--bg1),var(--bg2) 55%,var(--bg3));background-attachment:fixed;display:flex;justify-content:center;padding:20px 14px 40px;line-height:1.5}
+body::before,body::after{content:"";position:fixed;border-radius:50%;filter:blur(60px);opacity:.5;z-index:-1}
+body::before{width:300px;height:300px;background:#ff9ecb;top:-80px;left:-80px}
+body::after{width:340px;height:340px;background:#8fd3ff;bottom:-100px;right:-90px}
+h1,h2,h3,.btn{font-family:'Baloo 2','Nunito',sans-serif}
+.app{width:100%;max-width:560px}
+.card{background:var(--card);backdrop-filter:blur(14px);border:2px solid var(--line);border-radius:28px;padding:26px 22px;box-shadow:0 12px 40px rgba(110,70,200,.16)}
+.center{text-align:center}
+h1{font-size:clamp(2rem,8vw,2.8rem);line-height:1.05;font-weight:800;margin:10px 0 8px;background:linear-gradient(90deg,#ff5fa2,#8a5cf6,#2ec4b6);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{color:var(--soft);font-weight:700;margin-bottom:18px}
+.cast{display:flex;justify-content:center;margin:6px 0 14px}
+.cast svg{width:19%;max-width:92px;margin:0 -2px}
+.cast svg:nth-child(odd){transform:translateY(8px)}
+.btn{border:0;cursor:pointer;font-size:1.15rem;font-weight:800;color:#fff;padding:13px 30px;border-radius:999px;background:linear-gradient(90deg,#ff5fa2,#8a5cf6);box-shadow:0 6px 0 rgba(90,50,170,.35);transition:transform .12s,box-shadow .12s}
+.btn:hover{transform:translateY(-2px)}
+.btn:active{transform:translateY(4px);box-shadow:0 2px 0 rgba(90,50,170,.35)}
+.btn.alt{background:var(--card);color:var(--ink);border:2px solid var(--line);box-shadow:none}
+.btn:focus-visible,.opt:focus-visible{outline:3px solid #8a5cf6;outline-offset:3px}
+.meta{display:flex;justify-content:space-between;font-weight:800;color:var(--soft);font-size:.95rem;margin-bottom:8px}
+.bar{height:12px;border-radius:99px;background:var(--line);overflow:hidden;margin-bottom:20px}
+.bar i{display:block;height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,#ff5fa2,#ffb703,#2ec4b6,#8a5cf6);transition:width .4s}
+.q{font-size:1.4rem;font-weight:800;line-height:1.25;margin-bottom:16px}
+.opt{display:block;width:100%;text-align:left;font:inherit;font-weight:700;color:var(--ink);background:var(--card);border:2px solid var(--line);border-radius:18px;padding:13px 16px;margin-bottom:10px;cursor:pointer;transition:transform .12s,border-color .12s,background .12s}
+.opt:hover{transform:translateX(4px);border-color:var(--c)}
+.opt.on{background:linear-gradient(90deg,var(--c),var(--c2));color:#fff;border-color:transparent}
+.hero{text-align:center;padding:6px 0 10px;border-radius:22px}
+.hero svg{width:200px;height:200px;animation:bob 2.4s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-8px)}}
+.pill{display:inline-block;font-weight:800;padding:4px 14px;border-radius:99px;color:#fff;background:var(--c);font-size:.9rem}
+.res-t{font-size:2rem;font-weight:800;line-height:1.1;margin:8px 0 2px}
+.quote{color:var(--soft);font-weight:700;font-style:italic;margin-bottom:12px}
+.desc{margin:10px 0 4px}
+.tip{background:var(--line);border-radius:16px;padding:12px 14px;margin:12px 0;font-weight:700}
+h3{font-size:1.25rem;margin:22px 0 10px}
+.row{margin-bottom:14px;padding:12px;border:2px solid var(--line);border-radius:18px}
+.row.top{border-color:var(--c)}
+.row .h{display:flex;align-items:center;gap:10px}
+.row .h svg{width:46px;height:46px;flex:none}
+.row .h b{flex:1;font-family:'Baloo 2';font-size:1.05rem;line-height:1.15}
+.row .h em{font-style:normal;font-family:'Baloo 2';font-weight:800;font-size:1.5rem}
+.track{height:10px;border-radius:99px;background:var(--line);margin:8px 0;overflow:hidden}
+.track i{display:block;height:100%;width:0;border-radius:99px;transition:width 1s cubic-bezier(.2,.8,.2,1)}
+.row p{font-size:.92rem;color:var(--soft);font-weight:600}
+.acts{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:20px}
+.foot{text-align:center;color:var(--soft);font-size:.85rem;font-weight:700;margin-top:16px}
+.form{display:grid;gap:12px;text-align:left;margin:4px 0 6px}
+.form label{font-weight:800;font-size:.95rem}
+.form label span,.form label b{color:var(--soft);font-weight:700}
+.form input{display:block;width:100%;margin-top:6px;font:inherit;font-weight:700;color:var(--ink);background:var(--card);border:2px solid var(--line);border-radius:16px;padding:12px 14px}
+.form input:focus{outline:3px solid #8a5cf6;outline-offset:2px;border-color:transparent}
+.err{color:#e11d48;font-weight:800;min-height:1.2em;font-size:.9rem}
+.form .btn{justify-self:center}
+.fade{animation:in .35s ease}
+@keyframes in{from{opacity:0;transform:translateY(10px)}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<main class="app" id="app"></main>
+<script>
+// ===== DATA SILA =====
+const S=[
+{n:'Sila 1',t:'Ketuhanan Yang Maha Esa',h:'Si Penjaga Iman',c:'#f5a300',c2:'#ffd23f',q:'Berusaha dengan tulus, berserah dengan tenang.',
+ d:'Kamu punya kompas batin yang kuat. Keyakinan membuatmu tenang saat panik, jujur saat tidak ada yang melihat, dan menghargai teman yang beribadah dengan cara berbeda.',
+ tip:'Jadi teman yang mengingatkan dengan lembut, bukan menghakimi. Ajak teman lintas agama untuk kegiatan sosial bareng.'},
+{n:'Sila 2',t:'Kemanusiaan yang Adil dan Beradab',h:'Si Hati Hangat',c:'#ff4d8d',c2:'#ff9ecb',q:'Peduli itu bukan pilihan, itu cara jadi manusia.',
+ d:'Empatimu tinggi. Kamu cepat sadar kalau ada teman yang murung atau diperlakukan tidak pantas, dan kamu tidak ragu mengulurkan tangan lebih dulu.',
+ tip:'Jaga energimu juga. Peduli pada orang lain tetap perlu diimbangi dengan peduli pada diri sendiri.'},
+{n:'Sila 3',t:'Persatuan Indonesia',h:'Si Perekat Bangsa',c:'#e63946',c2:'#ff8a5b',q:'Beda-beda itu seru, asal tetap satu tim.',
+ d:'Kamu jago menyatukan orang dari berbagai latar belakang. Bangga pada Indonesia, suka budaya daerah, dan nggak betah melihat kelompok terpecah.',
+ tip:'Manfaatkan bakatmu: jadi panitia acara lintas kelas atau pengurus OSIS untuk kegiatan budaya.'},
+{n:'Sila 4',t:'Kerakyatan yang Dipimpin oleh Hikmat Kebijaksanaan dalam Permusyawaratan/Perwakilan',h:'Si Suara Musyawarah',c:'#6d5df6',c2:'#a78bfa',q:'Semua suara layak didengar sebelum memutuskan.',
+ d:'Kamu pendengar sekaligus pemikir. Saat ada perbedaan pendapat, kamu memilih diskusi dan mencari jalan tengah, bukan memaksakan kehendak.',
+ tip:'Berani bersuara juga penting. Latih dirimu memimpin forum seperti debat, rapat kelas, atau Parlemen Remaja.'},
+{n:'Sila 5',t:'Keadilan Sosial bagi Seluruh Rakyat Indonesia',h:'Si Penegak Adil',c:'#12a594',c2:'#5eead4',q:'Adil itu memberi hak yang sama, bukan sekadar membagi rata.',
+ d:'Kamu peka pada ketimpangan. Kamu suka aturan yang jelas, pembagian tugas yang seimbang, dan paling tidak tahan melihat orang diperlakukan tidak sama.',
+ tip:'Salurkan lewat aksi nyata: galang donasi, bantu teman yang kurang mampu, atau jadi perwakilan kelas.'}
+];
+const HAIR=['#5b3a1e','#2b2d42','#7a1f3d','#1f3a5f','#14532d'];
+
+// [teks, sila utama (+2), sila pendamping (+1)] indeks 0-4
+const Q=[
+['Besok ada ujian penting. Persiapanmu?',[['Belajar maksimal, lalu berdoa dan tawakal',0,4],['Belajar bareng supaya semua teman paham',1,2],['Bikin sesi diskusi, semua boleh bertanya',3,2],['Cek kisi-kisi biar semua dapat materi yang sama',4,3]]],
+['Temanmu yang beda agama sedang merayakan hari rayanya. Kamu?',[['Mengucapkan selamat dan menghormati ibadahnya',0,1],['Menanyakan kabarnya, siap bantu kalau perlu',1,0],['Mengajak satu kelas ikut merayakan kebersamaan',2,1],['Memastikan jadwal sekolah tidak merugikan siapa pun',4,0]]],
+['Kamu melihat teman dibully di kelas.',[['Langsung membela dan merangkulnya',1,4],['Mengajak kelas sepakat stop bullying',3,2],['Mengingatkan pelaku soal akhlak dan dosa',0,1],['Melapor ke guru supaya ada sanksi yang adil',4,3]]],
+['Pemilihan ketua OSIS tiba. Kamu memilih berdasarkan...',[['Visi misi semua calon yang sudah kudengar',3,4],['Siapa yang paling peduli pada siswa',1,3],['Siapa yang bisa menyatukan semua angkatan',2,3],['Doa dan hati nurani supaya amanah',0,3]]],
+['Kelasmu kalah di lomba 17-an antarkelas.',[['Tetap semangat, yang penting kompak',2,1],['Evaluasi bareng, semua boleh kasih saran',3,2],['Minta penilaian juri dibuka secara transparan',4,3],['Disyukuri, pasti ada hikmahnya',0,1]]],
+['Teman dari daerah lain sering diejek karena logatnya.',[['Mengajaknya ngobrol dan belajar bahasa daerahnya',2,1],['Membelanya, ejekan itu menyakitkan',1,2],['Mengusulkan acara budaya daerah di kelas',3,2],['Menegur: semua orang berhak dihargai sama',4,1]]],
+['Di kerja kelompok, ada anggota yang tidak ikut kerja.',[['Membagi ulang tugas supaya adil untuk semua',4,3],['Menanyakan baik-baik, mungkin dia ada masalah',1,0],['Mengadakan rapat kecil untuk cari solusi',3,2],['Tetap menjaga kekompakan kelompok',2,1]]],
+['Kamu dapat uang jajan lebih bulan ini.',[['Sedekah sebagian sebagai tanda syukur',0,4],['Traktir teman yang sedang kesusahan',1,4],['Patungan untuk kas kelas',2,4],['Disisihkan untuk membantu adik kelas yang kurang mampu',4,1]]],
+['Ada hoaks bernada SARA beredar di grup angkatan.',[['Klarifikasi dan ajak semua menjaga persatuan',2,1],['Ajak diskusi terbuka dan cek fakta bersama',3,1],['Mengingatkan bahwa fitnah itu dosa, jaga lisan',0,1],['Melaporkan, pelaku harus bertanggung jawab',4,2]]],
+['Cita-citamu untuk Indonesia?',[['Bangsa yang beriman dan rukun antarumat',0,2],['Bangsa yang manusiawi dan saling peduli',1,4],['Indonesia utuh dari Sabang sampai Merauke',2,3],['Semua rakyat punya suara dan kesempatan yang sama',3,4]]]
+];
+
+// ===== ILUSTRASI CHIBI (SVG) =====
+function chibi(i){
+ const c=S[i].c,c2=S[i].c2,hair=HAIR[i],g='g'+i;
+ const A=[
+ `<ellipse cx="100" cy="24" rx="32" ry="8" fill="none" stroke="#ffd23f" stroke-width="6"/><path d="M160 40l4 9 10 1-8 6 3 10-9-6-9 6 3-10-8-6 10-1z" fill="#ffd23f"/>`,
+ `<path d="M158 70l-18-18a10 10 0 0 1 18-12a10 10 0 0 1 18 12z" fill="#ff4d6d"/><path d="M40 52l-10-10a6 6 0 0 1 10-7a6 6 0 0 1 10 7z" fill="#ff9ecb"/>`,
+ `<rect x="52" y="60" width="96" height="11" rx="5" fill="#e63946"/><rect x="52" y="68" width="96" height="5" fill="#fff" opacity=".9"/><line x1="166" y1="170" x2="166" y2="104" stroke="#8a5a2b" stroke-width="4"/><rect x="166" y="104" width="26" height="9" fill="#e63946"/><rect x="166" y="113" width="26" height="9" fill="#fff" stroke="#ddd"/>`,
+ `<rect x="122" y="14" width="62" height="38" rx="16" fill="#fff" stroke="${c}" stroke-width="3"/><path d="M134 52l-6 12 18-12z" fill="#fff" stroke="${c}" stroke-width="3" stroke-linejoin="round"/><circle cx="141" cy="33" r="4" fill="${c}"/><circle cx="153" cy="33" r="4" fill="${c2}"/><circle cx="165" cy="33" r="4" fill="${c}"/>`,
+ `<line x1="166" y1="170" x2="166" y2="96" stroke="#8a5a2b" stroke-width="4"/><line x1="146" y1="100" x2="186" y2="100" stroke="#8a5a2b" stroke-width="4"/><path d="M140 104h12l-6 14z M180 104h12l-6 14z" fill="${c}"/><circle cx="166" cy="94" r="5" fill="#ffd23f"/>`
+ ][i];
+ return `<svg viewBox="0 0 200 200" role="img" aria-label="Chibi ${S[i].h}">
+ <defs><linearGradient id="${g}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${c2}"/><stop offset="1" stop-color="${c}"/></linearGradient></defs>
+ <ellipse cx="100" cy="184" rx="48" ry="8" fill="#000" opacity=".1"/>
+ <rect x="76" y="160" width="18" height="22" rx="8" fill="#3b2f63"/><rect x="106" y="160" width="18" height="22" rx="8" fill="#3b2f63"/>
+ <path d="M68 134q32-12 64 0l6 30q-38 10-76 0z" fill="url(#${g})"/>
+ <circle cx="62" cy="148" r="10" fill="#ffd9b8"/><circle cx="138" cy="148" r="10" fill="#ffd9b8"/>
+ <path d="M90 134l10 12 10-12z" fill="#fff" opacity=".85"/>
+ <circle cx="100" cy="94" r="50" fill="#ffd9b8"/>
+ <path d="M50 92q-4-58 50-58t50 58q-12-34-50-34t-50 34z" fill="${hair}"/>
+ <path d="M58 70q26-6 42-22 6 16 40 22-8-30-40-30t-42 30z" fill="${hair}"/>
+ <ellipse cx="78" cy="98" rx="9" ry="12" fill="#2b2250"/><ellipse cx="122" cy="98" rx="9" ry="12" fill="#2b2250"/>
+ <circle cx="81" cy="93" r="4" fill="#fff"/><circle cx="125" cy="93" r="4" fill="#fff"/><circle cx="75" cy="103" r="2" fill="#fff"/><circle cx="119" cy="103" r="2" fill="#fff"/>
+ <ellipse cx="64" cy="114" rx="9" ry="5" fill="#ff8fab" opacity=".7"/><ellipse cx="136" cy="114" rx="9" ry="5" fill="#ff8fab" opacity=".7"/>
+ <path d="M92 116q8 9 16 0" fill="none" stroke="#c2415f" stroke-width="3" stroke-linecap="round"/>
+ ${A}</svg>`;
+}
+
+// ===== STATE & RENDER =====
+const app=document.getElementById('app');
+let idx=0,score=[0,0,0,0,0],locked=false,ans=[],user={nama:'',kelas:''},sent=false;
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const $=(h)=>{app.innerHTML=h};
+
+function start(){
+ idx=0;score=[0,0,0,0,0];locked=false;ans=[];sent=false;
+ document.documentElement.style.setProperty('--c','#8a5cf6');document.documentElement.style.setProperty('--c2','#ff7eb6');
+ $(`<section class="card center fade">
+  <span class="pill">Tes kepribadian untuk siswa SMA/SMK</span>
+  <h1>Kamu Sila yang Mana?</h1>
+  <p class="lead">Jawab 10 situasi sehari-hari. Kami hitung seberapa besar kelima sila ada di dalam dirimu.</p>
+  <div class="cast">${[0,1,2,3,4].map(chibi).join('')}</div>
+  <form class="form" id="f" autocomplete="off">
+   <label>Nama lengkap <b>(wajib diisi)</b><input id="nama" maxlength="60" placeholder="Contoh: Rani Putri" value="${esc(user.nama)}"></label>
+   <label>Kelas dan sekolah <span>(opsional)</span><input id="kelas" maxlength="80" placeholder="Contoh: XI IPA 2, SMAN 1 Jakarta" value="${esc(user.kelas)}"></label>
+   <p class="err" id="err" role="alert"></p>
+   <button class="btn" id="go" type="submit">Mulai tes</button></form>
+  <p class="foot">Tidak ada jawaban benar atau salah. Nama dan hasilmu akan tersimpan dan bisa dilihat oleh guru atau pengelola tes.</p>
+ </section>`);
+ document.getElementById('f').onsubmit=e=>{e.preventDefault();const n=document.getElementById('nama').value.trim();
+  if(n.length<2){document.getElementById('err').textContent='Isi namamu dulu ya (minimal 2 huruf).';document.getElementById('nama').focus();return}
+  user.nama=n;user.kelas=document.getElementById('kelas').value.trim();ask()};
+}
+
+function ask(){
+ const [text,opts]=Q[idx];
+ $(`<section class="card fade">
+  <div class="meta"><span>Soal ${idx+1} dari ${Q.length}</span><span>${Math.round(idx/Q.length*100)}%</span></div>
+  <div class="bar"><i style="width:${idx/Q.length*100}%"></i></div>
+  <h2 class="q">${text}</h2>
+  ${opts.map((o,k)=>`<button class="opt" data-k="${k}">${o[0]}</button>`).join('')}
+ </section>`);
+ requestAnimationFrame(()=>{const b=app.querySelector('.bar i');if(b)b.style.width=((idx+.0)/Q.length*100)+'%'});
+ app.querySelectorAll('.opt').forEach(b=>b.onclick=()=>pick(b));
+}
+
+function pick(btn){
+ if(locked)return;locked=true;
+ const o=Q[idx][1][+btn.dataset.k];
+ score[o[1]]+=2;score[o[2]]+=1;ans.push({q:Q[idx][0],a:o[0],s:o[1]});
+ btn.classList.add('on');
+ document.documentElement.style.setProperty('--c',S[o[1]].c);document.documentElement.style.setProperty('--c2',S[o[1]].c2);
+ setTimeout(()=>{locked=false;idx++;idx<Q.length?ask():result()},380);
+}
+
+function percents(){
+ const tot=score.reduce((a,b)=>a+b,0);
+ const p=score.map(s=>Math.round(s/tot*100));
+ const top=score.indexOf(Math.max(...score));
+ p[top]+=100-p.reduce((a,b)=>a+b,0);
+ return p;
+}
+
+function result(){
+ const p=percents(),top=p.indexOf(Math.max(...p)),T=S[top];
+ const order=[0,1,2,3,4].sort((a,b)=>p[b]-p[a]);
+ document.documentElement.style.setProperty('--c',T.c);document.documentElement.style.setProperty('--c2',T.c2);
+ $(`<section class="card fade">
+  <div class="hero" style="background:linear-gradient(160deg,${T.c2}55,${T.c}33)">${chibi(top)}</div>
+  <div class="center">
+   <p class="quote" style="margin:0 0 6px">Hai, ${esc(user.nama)}! Hasilmu:</p><span class="pill">${T.n} · ${p[top]}% dominan</span>
+   <h2 class="res-t">${T.h}</h2>
+   <p class="quote">${T.q}</p>
+  </div>
+  <p class="desc">${T.d}</p>
+  <div class="tip"><b>Saran buat kamu:</b> ${T.tip}</div>
+  <h3>Semua sila dalam dirimu</h3>
+  ${order.map(i=>`<div class="row ${i===top?'top':''}">
+    <div class="h">${chibi(i)}<b>${S[i].n}: ${S[i].t}</b><em style="color:${S[i].c}">${p[i]}%</em></div>
+    <div class="track"><i data-w="${p[i]}" style="background:linear-gradient(90deg,${S[i].c2},${S[i].c})"></i></div>
+    <p>${S[i].d}</p></div>`).join('')}
+  <div class="acts"><button class="btn" id="share">Bagikan hasil</button><button class="btn alt" id="again">Ulangi tes</button></div>
+  <p class="foot" id="msg">Persentase dihitung dari jawabanmu, bukan penilaian benar atau salah.</p>
+ </section>`);
+ setTimeout(()=>app.querySelectorAll('.track i').forEach(e=>e.style.width=e.dataset.w+'%'),120);
+ window.scrollTo({top:0,behavior:'smooth'});
+ document.getElementById('again').onclick=start;
+ if(!sent){sent=true;const m=document.getElementById('msg');
+  fetch('/api/submit',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({nama:user.nama,kelas:user.kelas,top,scores:score,percents:p,answers:ans})})
+  .then(r=>{m.textContent=r.ok?'Hasilmu sudah tersimpan untuk guru atau pengelola tes.':'Hasil belum tersimpan, tapi kamu tetap bisa melihatnya di sini.'})
+  .catch(()=>{m.textContent='Hasil belum tersimpan (tidak ada koneksi), tapi kamu tetap bisa melihatnya di sini.'})}
+ document.getElementById('share').onclick=async()=>{
+  const txt=`Aku ${T.h} (${T.n} ${p[top]}%) di Tes Kepribadian Pancasila! `+order.map(i=>`${S[i].n} ${p[i]}%`).join(', ')+'. Coba juga: '+location.href;
+  try{if(navigator.share){await navigator.share({title:'Tes Kepribadian Pancasila',text:txt})}else{await navigator.clipboard.writeText(txt);document.getElementById('msg').textContent='Hasil disalin. Tempel di story atau grup kelasmu.'}}catch(e){}
+ };
+}
+start();
+</script>
+</body>
+</html>
